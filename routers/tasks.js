@@ -10,7 +10,17 @@ router.get('/',async (req,res)=>{
    }catch(err){
         res.send('Error' + err);
    }    
-})
+});
+
+router.get('/:id',async (req,res)=>{
+    try{
+         const id_task = await Task.findById(req.params.id);
+         res.json(id_task);
+ 
+    }catch(err){
+         res.send('Error' + err);
+    }    
+ });
 
 
 router.post('/', async (req,res)=>{
