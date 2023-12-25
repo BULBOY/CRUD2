@@ -21,6 +21,33 @@ router.get('/:id',async (req,res)=>{
          res.send('Error' + err);
     }    
  });
+// task updating
+
+ router.put('/:id', async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const task_update = await Task.findByIdAndUpdate(id, req.body);
+        const uptdTask = await Task.findById(id)
+        res.json(uptdTask);
+    }catch(err){
+        res.send('Error' + err);
+    }
+ });
+
+ //delete task
+ router.delete('/:id', async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const task_update = await Task.findByIdAndDelete(id, req.body);
+        if(!task_update){
+            res.send('Task not found')
+        }
+        const uptdTask = await Task.findById(id)
+        res.json(uptdTask);
+    }catch(err){
+        res.send('Error' + err);
+    }
+ });
 
 
 router.post('/', async (req,res)=>{

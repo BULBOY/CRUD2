@@ -17,6 +17,7 @@ con.on('open',(req,res)=>{
 });
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}))
 
 const tasksRoutes = require('../CRUD2/routers/tasks');
 app.use('/tasks',tasksRoutes);
