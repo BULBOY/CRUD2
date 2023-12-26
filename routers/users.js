@@ -26,7 +26,7 @@ router.get('/:id',async (req,res)=>{
     try{
         const {id} = req.params;
         const user_update = await User.findByIdAndUpdate(id, req.body);
-        const uptdUser = await Task.findById(id)
+        const uptdUser = await User.findById(id)
         res.json(uptdUser);
     }catch(err){
         res.send('Error' + err);

@@ -21,6 +21,7 @@ router.get('/:id',async (req,res)=>{
          res.send('Error' + err);
     }    
  });
+ 
 // task updating
 
  router.put('/:id', async (req,res)=>{
@@ -35,6 +36,7 @@ router.get('/:id',async (req,res)=>{
  });
 
  //delete task
+
  router.delete('/:id', async (req,res)=>{
     try{
         const {id} = req.params;
@@ -49,6 +51,7 @@ router.get('/:id',async (req,res)=>{
     }
  });
 
+//create task
 
 router.post('/', async (req,res)=>{
     const task_model = new Task ({
