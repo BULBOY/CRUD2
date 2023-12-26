@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/task_model.js');
 
-router.get('/',async (req,res)=>{
+router.get('/', async (req,res)=>{
    try{
         const all_tasks = await Task.find();
         res.json(all_tasks);
