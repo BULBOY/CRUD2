@@ -3,8 +3,17 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user_model.js');
 
+router.get('/',(req,res)=>{
+    res.render('index')
+});
 
-router.get('/', async (req,res)=>{
+router.get('/login-user',(req,res)=>{
+    res.render('login_user')
+});
+
+//listing all users
+
+router.get('/api/user/read', async (req,res)=>{
     try{
         const all_Users = await User.find();
         res.json(all_Users)
@@ -13,7 +22,9 @@ router.get('/', async (req,res)=>{
     }
 });
 
-router.get('/:id',async (req,res)=>{
+//finding user by ID
+
+router.get('/api/user/read/:id',async (req,res)=>{
     try{
          const id_user = await User.findById(req.params.id);
          res.json(id_user);
@@ -22,9 +33,9 @@ router.get('/:id',async (req,res)=>{
          res.send('Error' + err);
     }    
  });
-// task updating
+// user update
 
- router.put('/:id', async (req,res)=>{
+ router.put('/api/user/update/:id', async (req,res)=>{
     try{
         const {id} = req.params;
         const user_update = await User.findByIdAndUpdate(id, req.body);
@@ -35,8 +46,8 @@ router.get('/:id',async (req,res)=>{
     }
  });
 
- //delete task
- router.delete('/:id', async (req,res)=>{
+ //delete user
+ router.delete('/api/user/delete/:id', async (req,res)=>{
     try{
         const {id} = req.params;
         const user_update = await User.findByIdAndDelete(id, req.body);
@@ -49,20 +60,21 @@ router.get('/:id',async (req,res)=>{
         res.send('Error' + err);
     }
  });
-
-router.post('/', async(req,res)=>{
+// creating user
+router.post('/api/user/create', (req,res)=>{      
     const user_model = new User({
         userName:req.body.name,
         userSurname:req.body.surname,
         userEmail:req.body.email,
-        userPasswd:req.body.passwd
-    });
+        userPasswd:bcrypt.hashSync(req.body.passwd, 8)
+        });       
+    
     try{
-        const record = await user_model.save();
-        res.json(record); 
-    }catch(err){
-        res.send('Error' + err)
-    }
+        const record = user_model.save();
+            res.render('index'); 
+        }catch(err){
+            res.send('Error' + err)
+        }   
 });
 
 module.exports = router

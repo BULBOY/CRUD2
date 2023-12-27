@@ -6,6 +6,7 @@ const url = 'mongodb+srv://hristo:214023@cluster0.odf8ikz.mongodb.net/CRUDDB?ret
 
 const app = express();
 
+
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended:true}));
 
@@ -18,12 +19,13 @@ con.on('open',(req,res)=>{
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
+app.set("view engine", "ejs")
 
 const tasksRoutes = require('../CRUD2/routers/tasks');
 app.use('/tasks',tasksRoutes);
 
 const usersRoutes = require('../CRUD2/routers/users');
-app.use('/users',usersRoutes);
+app.use('/',usersRoutes);
 
 app.listen(3000,(req,res)=>{
     console.log('Server starts on port 3000');
