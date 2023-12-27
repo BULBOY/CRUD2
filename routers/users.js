@@ -11,6 +11,10 @@ router.get('/login-user',(req,res)=>{
     res.render('login_user')
 });
 
+router.get('user-create-error',(req,res)=>{
+    res.render('loginerr')
+})
+
 //listing all users
 
 router.get('/api/user/read', async (req,res)=>{
@@ -61,20 +65,27 @@ router.get('/api/user/read/:id',async (req,res)=>{
     }
  });
 // creating user
-router.post('/api/user/create', (req,res)=>{      
-    const user_model = new User({
+router.post('/api/user/create', async (req,res)=>{      
+    
+    try{
+        const user_model = new User({
         userName:req.body.name,
         userSurname:req.body.surname,
         userEmail:req.body.email,
         userPasswd:bcrypt.hashSync(req.body.passwd, 8)
         });       
     
-    try{
-        const record = user_model.save();
+        const existingUser = await User.findOne({userEmail:req.body.email});
+        if(existingUser) {
+            res.render('loginerr');
+        }else{
+            const record = await user_model.save();
             res.render('index'); 
-        }catch(err){
-            res.send('Error' + err)
-        }   
+            }
+        
+    }catch(err){
+        res.send('Error' + err)
+    }   
 });
 
 module.exports = router
