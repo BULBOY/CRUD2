@@ -22,10 +22,13 @@ app.use(express.urlencoded({extended:false}))
 app.set("view engine", "ejs")
 
 const tasksRoutes = require('../CRUD2/routers/tasks');
-app.use('/tasks',tasksRoutes);
+app.use('/',tasksRoutes);
 
 const usersRoutes = require('../CRUD2/routers/users');
 app.use('/',usersRoutes);
+
+const homePage = require('../CRUD2/routers/home');
+app.use('/',homePage);
 
 app.listen(3000,(req,res)=>{
     console.log('Server starts on port 3000');

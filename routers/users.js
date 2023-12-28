@@ -11,9 +11,32 @@ router.get('/login-user',(req,res)=>{
     res.render('login_user')
 });
 
-router.get('user-create-error',(req,res)=>{
-    res.render('loginerr')
+router.get('/user-create-error',(req,res)=>{
+    res.render('user_create_err')
+});
+
+router.get('/login-user-error',(req,res)=>{
+    res.render('login_user_err')
 })
+
+router.post('/user-login', async (req,res)=>{
+    try{
+        const logUser = await User.findOne({userEmail:req.body.email});
+        if(logUser) {
+            const validPassword = bcrypt.compareSync(req.body.passwd, logUser.userPasswd);
+            
+            if(validPassword){
+                res.render('home',{user:logUser});
+            }else{
+                res.render('login_user_err');
+            }
+        }else{
+            res.render('login_user_err');
+        }
+    }catch (error) {
+        res.status(400).json({error});
+    }
+});
 
 //listing all users
 
@@ -77,7 +100,7 @@ router.post('/api/user/create', async (req,res)=>{
     
         const existingUser = await User.findOne({userEmail:req.body.email});
         if(existingUser) {
-            res.render('loginerr');
+            res.render('user_create_err');
         }else{
             const record = await user_model.save();
             res.render('index'); 

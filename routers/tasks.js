@@ -2,17 +2,19 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/task_model.js');
 
-router.get('/', async (req,res)=>{
+router.get('/api/tasks/read', async (req,res)=>{
    try{
-        const all_tasks = await Task.find();
-        res.json(all_tasks);
+        const all_tasks = await Task.find({stat:"open"});
+        //res.render('home',{tasks:all_tasks});
+        res.render('all_tasks',{data:all_tasks})
+        console.log(all_tasks)
 
    }catch(err){
         res.send('Error' + err);
    }    
 });
 
-router.get('/:id',async (req,res)=>{
+router.get('/api/tasks/read/:id',async (req,res)=>{
     try{
          const id_task = await Task.findById(req.params.id);
          res.json(id_task);
@@ -24,7 +26,7 @@ router.get('/:id',async (req,res)=>{
  
 // task updating
 
- router.put('/:id', async (req,res)=>{
+ router.put('/api/tasks/update/:id', async (req,res)=>{
     try{
         const {id} = req.params;
         const task_update = await Task.findByIdAndUpdate(id, req.body);
@@ -37,7 +39,7 @@ router.get('/:id',async (req,res)=>{
 
  //delete task
 
- router.delete('/:id', async (req,res)=>{
+ router.delete('/api/tasks/delete/:id', async (req,res)=>{
     try{
         const {id} = req.params;
         const task_update = await Task.findByIdAndDelete(id, req.body);
@@ -53,7 +55,7 @@ router.get('/:id',async (req,res)=>{
 
 //create task
 
-router.post('/', async (req,res)=>{
+router.post('/api/tasks/create', async (req,res)=>{
     const task_model = new Task ({
         "taskNumber": req.body.number,
         "user.name": req.body.name,
