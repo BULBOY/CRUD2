@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <form action="/" method="post">
+    <form action="/api/tasks/read/" method="post">
         <table class="table" style="width: 100%">
             <thead class="tdark">
                 <tr >
@@ -42,7 +42,7 @@
                 <td><%= data[i].ownedByr%></td>
                 <td><%= data[i].stat%></td>
                 <td>
-                    <a href="/update_task?id=<%=data[i]._id%>" class="update-btn">
+                    <a href="/api/tasks/read/?id=<%=data[i]._id%>" class="update-btn">
                         <button>Update</button>
                     </a>
                     <a class="delete-btn" data-id>

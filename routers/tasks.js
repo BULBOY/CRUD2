@@ -7,7 +7,6 @@ router.get('/api/tasks/read', async (req,res)=>{
         const all_tasks = await Task.find({stat:"open"});
         //res.render('home',{tasks:all_tasks});
         res.render('all_tasks',{data:all_tasks})
-        console.log(all_tasks)
 
    }catch(err){
         res.send('Error' + err);
@@ -17,6 +16,7 @@ router.get('/api/tasks/read', async (req,res)=>{
 router.get('/api/tasks/read/:id',async (req,res)=>{
     try{
          const id_task = await Task.findById(req.params.id);
+         console.log(id_task)
          res.json(id_task);
  
     }catch(err){
@@ -77,5 +77,8 @@ router.post('/api/tasks/create', async (req,res)=>{
     }
 });
 
+router.get('task_update',(req,res)=>{
+    
+})
 
 module.exports = router

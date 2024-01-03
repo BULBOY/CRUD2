@@ -1,114 +1,36 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('../models/user_model.js');
+const controller = require('../controllers/controllers')
 
-router.get('/',(req,res)=>{
-    res.render('index')
-});
 
-router.get('/login-user',(req,res)=>{
-    res.render('login_user')
-});
+router.get('/',controller.index_page);
 
-router.get('/user-create-error',(req,res)=>{
-    res.render('user_create_err')
-});
+router.get('/login-user',controller.login_user);
 
-router.get('/login-user-error',(req,res)=>{
-    res.render('login_user_err')
-})
+router.get('/user-create-error',controller.user_create_error);
 
-router.post('/user-login', async (req,res)=>{
-    try{
-        const logUser = await User.findOne({userEmail:req.body.email});
-        if(logUser) {
-            const validPassword = bcrypt.compareSync(req.body.passwd, logUser.userPasswd);
-            
-            if(validPassword){
-                res.render('home',{user:logUser});
-            }else{
-                res.render('login_user_err');
-            }
-        }else{
-            res.render('login_user_err');
-        }
-    }catch (error) {
-        res.status(400).json({error});
-    }
-});
+router.get('/login-user-error',controller.login_user_eroor)
+
+router.post('/user-login', controller.signin);
+
+
+//API
 
 //listing all users
 
-router.get('/api/user/read', async (req,res)=>{
-    try{
-        const all_Users = await User.find();
-        res.json(all_Users)
-    }catch(err){
-        res.send('Error' + err)
-    }
-});
+router.get('/api/user/read', controller.find);
 
 //finding user by ID
 
-router.get('/api/user/read/:id',async (req,res)=>{
-    try{
-         const id_user = await User.findById(req.params.id);
-         res.json(id_user);
- 
-    }catch(err){
-         res.send('Error' + err);
-    }    
- });
-// user update
+router.get('/api/user/read/:id', controller.find_by_id);
 
- router.put('/api/user/update/:id', async (req,res)=>{
-    try{
-        const {id} = req.params;
-        const user_update = await User.findByIdAndUpdate(id, req.body);
-        const uptdUser = await User.findById(id)
-        res.json(uptdUser);
-    }catch(err){
-        res.send('Error' + err);
-    }
- });
+// user update
+router.put('/api/user/update/:id', controller.user_update);
 
  //delete user
- router.delete('/api/user/delete/:id', async (req,res)=>{
-    try{
-        const {id} = req.params;
-        const user_update = await User.findByIdAndDelete(id, req.body);
-        if(!user_update){
-            res.send('User not found')
-        }
-        const uptdUser = await User.findById(id)
-        res.json(uptdUser);
-    }catch(err){
-        res.send('Error' + err);
-    }
- });
+router.delete('/api/user/delete/:id', controller.user_delete);
+
 // creating user
-router.post('/api/user/create', async (req,res)=>{      
-    
-    try{
-        const user_model = new User({
-        userName:req.body.name,
-        userSurname:req.body.surname,
-        userEmail:req.body.email,
-        userPasswd:bcrypt.hashSync(req.body.passwd, 8)
-        });       
-    
-        const existingUser = await User.findOne({userEmail:req.body.email});
-        if(existingUser) {
-            res.render('user_create_err');
-        }else{
-            const record = await user_model.save();
-            res.render('index'); 
-            }
-        
-    }catch(err){
-        res.send('Error' + err)
-    }   
-});
+router.post('/api/user/create', controller.user_create);
 
 module.exports = router

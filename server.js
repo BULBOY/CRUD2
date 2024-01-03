@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 //const bodyParser = require('body-parser');
 const url = 'mongodb+srv://hristo:214023@cluster0.odf8ikz.mongodb.net/CRUDDB?retryWrites=true&w=majority'
-//const url = 'mongodb://localhost/TestDB'
+const morgan = require('morgan')
 
 const app = express();
 
@@ -20,6 +20,8 @@ con.on('open',(req,res)=>{
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 app.set("view engine", "ejs")
+
+app.use(morgan('dev'));
 
 const tasksRoutes = require('../CRUD2/routers/tasks');
 app.use('/',tasksRoutes);
