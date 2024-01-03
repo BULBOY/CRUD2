@@ -1,84 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const Task = require('../models/task_model.js');
+const controller = require('../controllers/task_controllers')
 
-router.get('/api/tasks/read', async (req,res)=>{
-   try{
-        const all_tasks = await Task.find({stat:"open"});
-        //res.render('home',{tasks:all_tasks});
-        res.render('all_tasks',{data:all_tasks})
+// searching all tasks with "open" satus
 
-   }catch(err){
-        res.send('Error' + err);
-   }    
-});
+router.get('/api/tasks/read', controller.find_open_tasks);
 
-router.get('/api/tasks/read/:id',async (req,res)=>{
-    try{
-         const id_task = await Task.findById(req.params.id);
-         console.log(id_task)
-         res.json(id_task);
- 
-    }catch(err){
-         res.send('Error' + err);
-    }    
- });
+// finding tasks by ID
+
+router.get('/api/tasks/read/:id', controller.findID);
  
 // task updating
 
- router.put('/api/tasks/update/:id', async (req,res)=>{
-    try{
-        const {id} = req.params;
-        const task_update = await Task.findByIdAndUpdate(id, req.body);
-        const uptdTask = await Task.findById(id)
-        res.json(uptdTask);
-    }catch(err){
-        res.send('Error' + err);
-    }
- });
+ router.put('/api/tasks/update/:id', controller.updateID);
 
  //delete task
 
- router.delete('/api/tasks/delete/:id', async (req,res)=>{
-    try{
-        const {id} = req.params;
-        const task_update = await Task.findByIdAndDelete(id, req.body);
-        if(!task_update){
-            res.send('Task not found')
-        }
-        const uptdTask = await Task.findById(id)
-        res.json(uptdTask);
-    }catch(err){
-        res.send('Error' + err);
-    }
- });
+ router.delete('/api/tasks/delete/:id', controller.deleteID);
 
 //create task
 
-router.post('/api/tasks/create', async (req,res)=>{
-    const task_model = new Task ({
-        "taskNumber": req.body.number,
-        "user.name": req.body.name,
-        "user.email": req.body.email,
-        "user.staffNumber": req.body.stnumber,
-        "user.los": req.body.los,
-        "taskType": req.body.type,
-        "asset.number": req.body.asset,
-        "asset.model": req.body.model,
-        "stat": req.body.status,
-        "ownedBy": req.body.owner
-    });
-
-    try{
-        const record = await task_model.save();
-        res.json(record);
-    }catch(err){
-        res.send('Error ' + err)
-    }
-});
-
-router.get('task_update',(req,res)=>{
-    
-})
+router.post('/api/tasks/create', controller.create_task)
 
 module.exports = router

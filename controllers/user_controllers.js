@@ -1,4 +1,3 @@
-const Task = require('../models/task_model.js');
 const User = require('../models/user_model.js');
 const bcrypt = require('bcrypt');
 
