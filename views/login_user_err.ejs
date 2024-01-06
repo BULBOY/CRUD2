@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
+    <link rel="stylesheet" href="/public/css/login_err_style.css">
 </head>
 <body>
     <form action="/user-login" method="post">
-        <h1>
-            User Sign In
-        </h1>
+        <h1>User Sign In</h1>
         <p>Please sign in to your account.</p>
         <hr>
-        
+
         <label for="email">E-mail :</label>
         <input type="text" placeholder="Type your e-mail" name="email"><br>
 
         <label for="passwd">Password :</label>
         <input type="password" placeholder="Type your password" name="passwd">
         <hr>
-        <p style="color: red;">Incorrect e-mail or password</p>
+        <p class="error-message">Incorrect e-mail or password</p>
         <button type="submit" class="registerbtn">Sign In</button>
 
         <p>Don't have an account? <a href="/">Register</a>.</p>

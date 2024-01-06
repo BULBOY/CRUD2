@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/task_controllers')
 
 // searching all tasks with "open" satus
+router.get('/api/tasks/readAll', controller.find_all_tasks)
 
 router.get('/api/tasks/read', controller.find_open_tasks);
 

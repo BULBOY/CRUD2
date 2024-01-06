@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th,td {padding: .75em;text-align: center;font-family: Arial, Helvetica, sans-serif;font-size:small;vertical-align: top;border-top: 1px solid var(--border); }
+        table {border-spacing: 0px; width: 100%;}
+        thead {background-color: rgb(7, 44, 77);color: aliceblue;font-size: small;padding: 1em 0; width: 100%;}
+    </style>
+</head>
+<body>
+    <form action="/api/tasks/readAll/" method="post">
+        <table class="table" style="width: 100%">
+            <thead class="tdark">
+                <tr >
+                <th>Task Number</th>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th>Staff ID</th>
+                <th>LOS</th>
+                <th>Task type</th>
+                <th>Asset Number</th>
+                <th>Model</th>
+                <th>Engineer</th>
+                <th>Status</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < all_tasks.length; i++){ %>
+                <tr>
+                <td><%= all_tasks[i].taskNumber%></td>           
+                <td><%= all_tasks[i].user.name%></td>
+                <td><%= all_tasks[i].user.email%></td>
+                <td><%= all_tasks[i].user.staffNumber%></td>
+                <td><%= all_tasks[i].user.los%></td>
+                <td><%= all_tasks[i].taskType%></td>
+                <td><%= all_tasks[i].asset.number%></td>
+                <td><%= all_tasks[i].asset.model%></td>
+                <td><%= all_tasks[i].ownedByr%></td>
+                <td><%= all_tasks[i].stat%></td>
+                <td>
+                    <a href="/api/tasks/read/?id=<%=all_tasks[i]._id%>" class="update-btn">
+                        <button>Update</button>
+                    </a>
+                    <a class="delete-btn" data-id>
+                        <button>Delete</button>
+                    </a>
+                </td>
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

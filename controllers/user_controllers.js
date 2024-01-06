@@ -27,9 +27,10 @@ exports.signin = async (req,res)=>{
             if(validPassword){
                 const isAdministrator = (logUser.isAdmin)
                 if(!isAdministrator){
-                    res.render('home',{user:logUser});
+                    res.render('home',{logUser});
+
                 }else{
-                    res.render('admin_home',{user:logUser});
+                    res.render('admin_home',{logUser});
                 }                
             }else{
                 res.render('login_user_err');

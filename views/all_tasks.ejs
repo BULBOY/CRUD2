@@ -5,27 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        th,td {padding: .75em;text-align: center;font-family: Arial, Helvetica, sans-serif;font-size:small;vertical-align: top;border-top: 1px solid var(--border); }
-        table {border-spacing: 0px; width: 100%;}
-        thead {background-color: rgb(7, 44, 77);color: aliceblue;font-size: small;padding: 1em 0; width: 100%;}
+        /* CSS styles here */
+        th,
+        td {
+            padding: .75em;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: small;
+            vertical-align: top;
+            border-top: 1px solid var(--border);
+        }
+
+        table {
+            border-spacing: 0px;
+            width: 100%;
+        }
+
+        thead {
+            background-color: #4CAF50;
+            color: aliceblue;
+            font-size: small;
+            padding: 1em 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <form action="/api/tasks/read/" method="post">
         <table class="table" style="width: 100%">
             <thead class="tdark">
-                <tr >
-                <th>Task Number</th>
-                <th>Name</th>
-                <th>E-mail</th>
-                <th>Staff ID</th>
-                <th>LOS</th>
-                <th>Task type</th>
-                <th>Asset Number</th>
-                <th>Model</th>
-                <th>Engineer</th>
-                <th>Status</th>
-                
+                <tr>
+                    <th>Task Number</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Staff ID</th>
+                    <th>LOS</th>
+                    <th>Task type</th>
+                    <th>Asset Number</th>
+                    <th>Model</th>
+                    <th>Engineer</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>

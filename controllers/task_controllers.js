@@ -1,4 +1,29 @@
 const Task = require('../models/task_model.js');
+const axios = require('axios');
+
+
+exports.update_task = (req, res) =>{
+ axios.get('http://localhost:3000/api/tasks/read')
+        .then(function(response){
+            res.render('index', { users : response.data });
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+}
+
+
+exports.find_all_tasks = async (req,res)=>{
+    try{
+         const all_tasks = await Task.find({});
+         //res.render('home',{tasks:all_tasks});
+         res.render('assigned_tasks',{all_tasks})
+ 
+    }catch(err){
+         res.send('Error' + err);
+    }    
+ }
+
 
 exports.find_open_tasks = async (req,res)=>{
     try{
