@@ -1,53 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Table Toggle</title>
+<title>Button-Activated Tables</title>
+<style>
+/* CSS styles go here */
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+thead {
+  background-color: #4CAF50;
+  color: aliceblue;
+  font-size: small;
+  padding: 1em 0;
+  width: 100%;
+}
+</style>
 </head>
 <body>
 
-<button onclick="showTable1()">Show Table 1</button>
-<button onclick="showTable2()">Show Table 2</button>
+<button id="btn1">Open Table 1</button>
+<button id="btn2">Open Table 2</button>
 
-<table id="table1" style="display: none;">
-  <thead>
-    <tr>
-      <th>Column 1</th>
-      <th>Column 2</th>
-    </tr>
+<form action="/api/tasks/read/" method="post">
+<table id="table1" style="display: none; width: 100%;">
+  <thead class="tdark">
+  <tr>
+    <th>Task Number</th>
+    <th>Name</th>
+    <th>E-mail</th>
+    <th>Staff ID</th>
+    <th>LOS</th>
+    <th>Task type</th>
+    <th>Asset Number</th>
+    <th>Model</th>
+    <th>Engineer</th>
+    <th>Status</th>
+  </tr>
   </thead>
-  <tbody>
+  <% for(var i = 0; i < data.length; i++){ %>
     <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
+    <td><%= data[i].taskNumber%></td>           
+    <td><%= data[i].user.name%></td>
+    <td><%= data[i].user.email%></td>
+    <td><%= data[i].user.staffNumber%></td>
+    <td><%= data[i].user.los%></td>
+    <td><%= data[i].taskType%></td>
+    <td><%= data[i].asset.number%></td>
+    <td><%= data[i].asset.model%></td>
+    <td><%= data[i].ownedByr%></td>
+    <td><%= data[i].stat%></td>
+    <td>
+        <a href="/api/tasks/read/?id=<%=data[i]._id%>" class="update-btn">
+            <button>Update</button>
+        </a>
+        <a class="delete-btn" data-id>
+            <button>Delete</button>
+        </a>
+    </td>
     </tr>
-    </tbody>
 </table>
 
 <table id="table2" style="display: none;">
-  <thead>
-    <tr>
-      <th>Column A</th>
-      <th>Column B</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Data A</td>
-      <td>Data B</td>
-    </tr>
-    </tbody>
+  <tr>
+    <th>Header 1</th>
+    <th>Header 2</th>
+  </tr>
+  <tr>
+    <td>Content 1</td>
+    <td>Content 2</td>
+  </tr>
 </table>
 
 <script>
-function showTable1() {
-  document.getElementById("table1").style.display = "block";
-  document.getElementById("table2").style.display = "none"; // Hide the other table
-}
+  /* JavaScript code goes here */
+  const btn1 = document.getElementById("btn1");
+  const btn2 = document.getElementById("btn2");
+  const table1 = document.getElementById("table1");
+  const table2 = document.getElementById("table2");
 
-function showTable2() {
-  document.getElementById("table2").style.display = "block";
-  document.getElementById("table1").style.display = "none"; // Hide the other table
-}
+  btn1.addEventListener("click", () => {
+    table1.style.display = "table";
+    table2.style.display = "none";
+  });
+
+  btn2.addEventListener("click", () => {
+    table1.style.display = "none";
+    table2.style.display = "table";
+  });
 </script>
 
 </body>

@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-    <h1>hello {{ logUser._id }}</h1>
+    <h1>hello <%=logUser.userName%> <%=logUser.userSurname%></h1>
 
     <form action="/api/tasks/read/">
         <button class="button">All open tasks</button>
