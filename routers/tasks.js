@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/task_controllers')
+const service = require('../service/service')
+
+
+router.get('/new_task', service.create_task)
 
 // searching all tasks with "open" satus
 router.get('/api/tasks/readAll', controller.find_all_tasks)

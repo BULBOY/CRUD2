@@ -1,4 +1,4 @@
-const Task = require('../models/task_model.js');
+const Task = require('../models/task_model');
 const axios = require('axios');
 
 
@@ -88,7 +88,7 @@ exports.find_open_tasks = async (req,res)=>{
 
     try{
         const record = await task_model.save();
-        res.json(record);
+        res.render('create_task');
     }catch(err){
         res.send('Error ' + err)
     }

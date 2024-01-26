@@ -28,7 +28,8 @@ const taskSchema = new Schema({
     },
     ownedBy:{
         type:String,
-        required:true
+        required:false,
+        default:'None'
     },
     
 },{timestamps:true});

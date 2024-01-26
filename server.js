@@ -30,8 +30,8 @@ app.use('/',tasksRoutes);
 const usersRoutes = require('../CRUD2/routers/users');
 app.use('/',usersRoutes);
 
-const homePage = require('../CRUD2/routers/home');
-app.use('/',homePage);
+// const homePage = require('../CRUD2/service/service');
+// app.use('/',homePage);
 
 app.listen(3000,(req,res)=>{
     console.log('Server starts on port 3000');

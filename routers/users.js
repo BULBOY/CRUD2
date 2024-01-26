@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/user_controllers')
+const controller = require('../controllers/user_controllers');
+const service = require('../service/service')
 
 
-router.get('/',controller.index_page);
+router.get('/user-home',service.user_home);
 
-router.get('/login-user',controller.login_user);
+router.get('/',service.index_page);
 
-router.get('/user-create-error',controller.user_create_error);
+router.get('/login-user',service.login);
 
-router.get('/login-user-error',controller.login_user_eroor)
+router.get('/signup_err',service.signup_err);
 
-router.post('/user-login', controller.signin);
+router.get('/login_err',service.login_err)
+
+router.post('/signin', service.signin);
 
 
 //API
@@ -31,6 +34,6 @@ router.put('/api/user/update/:id', controller.user_update);
 router.delete('/api/user/delete/:id', controller.user_delete);
 
 // creating user
-router.post('/api/user/create', controller.user_create);
+router.post('/api/user/create', controller.signup);
 
 module.exports = router
